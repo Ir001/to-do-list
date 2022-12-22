@@ -32,6 +32,10 @@
   },
   "devDependencies": {
     "axios": "^1.2.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "mongoose": "^6.8.1",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
   }
 }
