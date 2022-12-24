@@ -1,11 +1,25 @@
+import  {BrowserRouter, Route, Switch} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
-import Users from './components/users/users'
+import Register from './components/auth/register';
+import Login from './components/auth/login'
+import Dashboards from './components/dashboards/dashboards'
+
 function App() {
   return (
-    <div className="App">
-      <Users />
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+            <Dashboards/>
+        </Route>
+        <Route path="/login">
+            <Login/>
+        </Route>
+        <Route path="/register">
+            <Register/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
