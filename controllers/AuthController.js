@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
+const jwt  = require('jsonwebtoken')
 const User = require('../models/User')
-
 const register = async(req,res,next) => {
     if(Object.keys(req.body).length == 0){
         res.json({success:true, 'message' : 'Success registered!', 'password' : passwordHash})
@@ -34,11 +34,16 @@ const register = async(req,res,next) => {
 
 const login = async(req,res,next) => {
     try{
-        const user = await User.findOne({email : req.body.email})
+        const user = await User.findOne({username : req.body.username})
+        if(user == null) return res.json({success : false, 'message' : 'Username tidak ditemukan'})
         const matchPasswod = await bcrypt.compare(req.body.password, user.password)
         if(!matchPasswod) return res.status(400).json({success : false, 'message' : 'Wrong password!'})
-        const accessToken = 
-        return res.json(user)
+        const accessToken = jwt.sign({
+            userId : user.id,
+            username : user.username,
+            email : user.email,
+        }, "SECRET_WOULD_IN_ENV", { expiresIn : '20s'})
+        return res.json({success : true, 'data' : {accessToken}})
     }catch(error){
         return res.json(error.toString())
     }
