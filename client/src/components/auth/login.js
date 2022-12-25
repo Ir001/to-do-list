@@ -11,12 +11,12 @@ const Login = ()=>{
                     <h1 className="text-[5.5rem] font-extrabold font-[Poppins-ExtraBold] w-[50%] leading-[1.2] bg-clip-text text-transparent bg-gradient-to-tr from-pink-500 to-red-900">TO DO LIST</h1>
                     <img src="hero.png" className="object-cover w-[80%]" alt="" />
                 </div>
-                <div className="px-16 w-[35%]">
-                    <div className="py-20">
-                        <h2 className="text-2xl text-[##5D5871] font-[500]">Welcome to To Do List</h2>
-                        <p className="text-[#6D6B7A]">Please sign-in to your account, and start manage futher</p>
+                <div className="px-14 w-[35%]">
+                    <div className="pt-20 pb-6">
+                        <h2 className="text-xl font-[Poppins-Bold] pb-3 text-[##5D5871] font-[500]">Welcome to To Do List</h2>
+                        <p className="text-[#6D6B7A] text-sm">Please sign-in to your account, and start manage futher</p>
                     </div>
-                    <h3 className="text-2xl text-[##5D5871] mb-4">Sign In</h3>
+                    <h3 className="text-xl text-[##5D5871] mb-4">Sign In</h3>
                     <form className="block w-full">
                         <div className="mb-3">
                             <label htmlFor="email" className="block mb-1 font-[##5D5871]">Username</label>
