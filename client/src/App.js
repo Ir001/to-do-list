@@ -1,6 +1,7 @@
-import  {BrowserRouter, Route, Switch} from 'react-router-dom'
+import  {BrowserRouter, Route, Routes} from 'react-router-dom'
 import logo from './logo.svg';
-import './App.css';
+import './dist/css/main.css';
+import './dist/css/fonts.css';
 import Register from './components/auth/register';
 import Login from './components/auth/login'
 import Dashboards from './components/dashboards/dashboards'
@@ -8,17 +9,11 @@ import Dashboards from './components/dashboards/dashboards'
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-            <Dashboards/>
-        </Route>
-        <Route path="/login">
-            <Login/>
-        </Route>
-        <Route path="/register">
-            <Register/>
-        </Route>
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<Dashboards/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+      </Routes>
     </BrowserRouter>
   );
 }
