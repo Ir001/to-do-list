@@ -3,7 +3,7 @@ const jwt  = require('jsonwebtoken')
 const User = require('../models/User')
 const register = async(req,res,next) => {
     if(Object.keys(req.body).length == 0){
-        res.json({success:true, 'message' : 'Success registered!', 'password' : passwordHash})
+        res.status(400).json({success:false, 'message' : 'Data cant be empty!'})
     }
     try {
         const isEmailExist = await User.find({email:req.body.email})
@@ -35,17 +35,29 @@ const register = async(req,res,next) => {
 const login = async(req,res,next) => {
     try{
         const user = await User.findOne({username : req.body.username})
-        if(user == null) return res.json({success : false, 'message' : 'Username tidak ditemukan'})
+        if(user == null) return res.status(400).json({success : false, 'message' : 'Username tidak ditemukan'})
+        
         const matchPasswod = await bcrypt.compare(req.body.password, user.password)
         if(!matchPasswod) return res.status(400).json({success : false, 'message' : 'Wrong password!'})
-        const accessToken = jwt.sign({
+        
+        const payload = {
             userId : user.id,
             username : user.username,
             email : user.email,
-        }, "SECRET_WOULD_IN_ENV", { expiresIn : '20s'})
+        }
+        const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn : '20s'})
+        const refreshToken = jwt.sign(payload, process.env.REFRESH_KEY, { expiresIn : '1d'})
+        
+        await User.findByIdAndUpdate(user.id, {$set : {refresh_token : refreshToken}},{
+            new : true
+        })
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly : true,
+            maxAge : 24 * 60 * 60 * 1000
+        })
         return res.json({success : true, 'data' : {accessToken}})
     }catch(error){
-        return res.json(error.toString())
+        return res.status(500).json({success : false, 'message' : error.toString()})
     }
 }
 

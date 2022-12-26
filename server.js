@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser =  require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-
+const dotenv = require('dotenv')
+dotenv.config()
 // Mongoose Connect
 mongoose.set('strictQuery', false)
 mongoose.connect('mongodb://localhost:27017/to-do-list')
@@ -17,7 +18,7 @@ db.on('open', () => {
 
 const app = express()
 const AuthRoute = require('./routes/auth')
-
+const CategoryAuth = require('./routes/category')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
@@ -36,3 +37,4 @@ app.listen(port, () =>{
     console.log(`Server start in http://localhost:${port}`)
 })
 app.use('/api/auth', AuthRoute)
+app.use('/api/category', CategoryAuth)

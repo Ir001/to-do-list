@@ -1,0 +1,27 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const Category = mongoose.Schema({
+    name : String
+})
+const User = mongoose.Schema({
+    fullname : String
+})
+
+const ToDoSchema = new Schema({
+    name : {
+        type : String
+    },
+    created_at : {
+        type : Date
+    },
+    category : {
+        type : mongoose.Types.ObjectId, ref: "Category"
+    },
+    user : {
+        type : mongoose.Types.ObjectId, ref: "User"
+    },
+}, {timestamps : true})
+
+const ToDo = mongoose.model('ToDo', ToDoSchema)
+module.exports = ToDo
