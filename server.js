@@ -18,7 +18,9 @@ db.on('open', () => {
 
 const app = express()
 const AuthRoute = require('./routes/auth')
-const CategoryAuth = require('./routes/category')
+const CategoryRoute = require('./routes/category')
+const ToDoRoute = require('./routes/todo')
+
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
@@ -37,4 +39,5 @@ app.listen(port, () =>{
     console.log(`Server start in http://localhost:${port}`)
 })
 app.use('/api/auth', AuthRoute)
-app.use('/api/category', CategoryAuth)
+app.use('/api/category', CategoryRoute)
+app.use('/api/to-do-list', ToDoRoute)

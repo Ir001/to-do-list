@@ -12,6 +12,9 @@ const ToDoSchema = new Schema({
     name : {
         type : String
     },
+    is_complete : {
+        type : Boolean
+    },
     created_at : {
         type : Date
     },
