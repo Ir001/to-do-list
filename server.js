@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser =  require('body-parser')
+const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
@@ -17,10 +18,12 @@ db.on('open', () => {
 
 
 const app = express()
+const verifyToken = require('./middleware/verifyToken')
 const AuthRoute = require('./routes/auth')
 const CategoryRoute = require('./routes/category')
 const ToDoRoute = require('./routes/todo')
 
+app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

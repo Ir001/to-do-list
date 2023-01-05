@@ -3,7 +3,23 @@ import {Link} from 'react-router-dom'
 import axios from "axios";
 
 const Login = ()=>{
-    
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [msg, setMsg] = useState('')
+    const Login = async(e)=>{
+        e.preventDefault()
+        const [data] = await axios.post('/api/auth/login',{
+            username,
+            password
+        })
+        if(data.success){
+            setMsg(<p className="bg-green-500 text-white py-4 px-5 rounded mb-2">{data.message}</p>)
+            return setTimeout(() => {
+                window.location.href='/'
+            }, 1000);
+        }
+        return setMsg(<p className="bg-red-500 text-white py-4 px-5 rounded mb-2">{data.message}</p>)
+    }
     return (
         <div className="font-[Poppins-Regular]">
             <div className="flex bg-white justify-between">
@@ -12,19 +28,23 @@ const Login = ()=>{
                     <img src="hero.png" className="object-cover w-[80%]" alt="" />
                 </div>
                 <div className="px-14 w-[35%]">
-                    <div className="pt-20 pb-6">
+                    <div className="pt-6 pb-6">
                         <h2 className="text-xl font-[Poppins-Bold] pb-3 text-[##5D5871] font-[500]">Welcome to To Do List</h2>
                         <p className="text-[#6D6B7A] text-sm">Please sign-in to your account, and start manage futher</p>
                     </div>
+                    {msg != '' ? msg : ``}
                     <h3 className="text-xl text-[##5D5871] mb-4">Sign In</h3>
-                    <form className="block w-full">
+                    <form onSubmit={Login}
+                     className="block w-full">
                         <div className="mb-3">
-                            <label htmlFor="email" className="block mb-1 font-[##5D5871]">Username</label>
-                            <input className="block px-5 text-sm py-3 border rounded outline-none w-full" type="email" placeholder="Your registered username" />
+                            <label htmlFor="text" className="block mb-1 font-[##5D5871]">Username</label>
+                            <input onChange={e => setUsername(e.target.value)}
+                            className="block px-5 text-sm py-3 border rounded outline-none w-full" type="text" placeholder="Your registered username" />
                         </div>
                        <div className="mb-8">
                             <label htmlFor="password" className="block mb-1 font-[##5D5871]">Password</label>
-                            <input className="block px-5 text-sm py-3 border rounded outline-none w-full" type="password" placeholder="*****" />
+                            <input onChange={e => setPassword(e.target.value)}
+                             className="block px-5 text-sm py-3 border rounded outline-none w-full" type="password" placeholder="*****" />
                        </div>
                         <button type="submit" className="block w-full bg-[#1571DE] text-white py-3 rounded">Login</button>
                         <p className="text-center text-xs font-[#333333] mt-5">

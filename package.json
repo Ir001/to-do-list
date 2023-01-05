@@ -28,6 +28,7 @@
   "homepage": "https://github.com/ir001/to-do-list#readme",
   "dependencies": {
     "concurrently": "^7.6.0",
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2"
   },
   "devDependencies": {

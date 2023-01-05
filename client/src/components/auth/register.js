@@ -13,14 +13,21 @@ const Register = ()=>{
     const Register = async(e)=>{
         e.preventDefault()
         try {
-            const response = await axios.post('api/auth/register',{
+            const {data} = await axios.post('api/auth/register',{
                 name : name,
                 phone : phone,
                 email : email,
                 username : username,
                 password : password,
             })
-            console.log(response.data)
+            if(data.success){
+                 setMsg(<p className="bg-green-500 text-white py-4 px-5 rounded my-1">{data.message}</p>)
+                 return setTimeout(() => {
+                    window.location.href="/login"
+                 }, 800);
+            }
+            setPassword('')
+            return setMsg(<p className="bg-red-500 text-white py-4 px-5 rounded my-1">{data.message}</p>)
         } catch (error) {
             if(error.response) console.log(error)
         }
@@ -34,10 +41,11 @@ const Register = ()=>{
                 <img src="hero.png" className="object-cover w-[80%]" alt="" />
             </div>
             <div className="px-14 w-[35%]">
-                <div className="pt-20 pb-6">
+                <div className="pt-6 pb-4">
                     <h2 className="text-xl font-[Poppins-Bold] pb-3 text-[##5D5871] font-[500]">Welcome to To Do List</h2>
                     <p className="text-[#6D6B7A] text-sm">Please sign-in to your account, and start manage futher</p>
                 </div>
+                {msg != `` ? msg : ``}
                 <h3 className="text-xl text-[##5D5871] mb-4">Sign Up</h3>
                 <form onSubmit={Register} className="block w-full">
                     <div className="mb-3">
