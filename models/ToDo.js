@@ -1,13 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const Category = mongoose.Schema({
-    name : String
-})
-const User = mongoose.Schema({
-    fullname : String
-})
-
 const ToDoSchema = new Schema({
     name : {
         type : String

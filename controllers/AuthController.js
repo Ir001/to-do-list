@@ -8,8 +8,6 @@ const register = async(req,res,next) => {
     try {
         const isEmailExist = await User.find({email:req.body.email})
         const isUsernameExist = await User.find({username:req.body.username})
-        console.log(isEmailExist.length)
-        console.log(isUsernameExist.length)
         if(isEmailExist.length > 0){
             return res.json({success:false, 'message' : `Email already exist!`})
         }

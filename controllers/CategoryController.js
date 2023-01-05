@@ -1,15 +1,34 @@
 const Category = require('../models/Category')
 
+const index = async(req,res,next) => {
+    try{
+        const categories = await Category
+        .find({ user : req.body.userId})
+        .populate('user', 'fullname username email')
+        return res.json({
+            'success':true,
+            'data' : categories
+        })
+    }catch(err){
+        return res.json({
+            'success':false,
+            'message' : err.toString()
+        })
+    }
+    res.end()
+}
+
 const store = async(req,res,next) => {
     if(Object.keys(req.body).length == 0){
         res.status(400).json({success:false, 'message' : 'Data cant be empty!'})
     }
     try {
-        const isExist = await Category.find({name:req.body.name})
+        const isExist = await Category.find({name:req.body.name, user : req.body.userId})
         if(isExist.length > 0){
             return res.json({success:false, 'message' : `Category already exist!`})
         }
         const category = {
+            'user' : req.body.userId,
             'name' : req.body.name,
             'created_at' : Date()
         }
@@ -41,6 +60,7 @@ const update = async(req,res,next) => {
 
 
 module.exports = {
+    index,
     store,
     update
 }
