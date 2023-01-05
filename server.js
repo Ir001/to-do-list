@@ -18,7 +18,6 @@ db.on('open', () => {
 
 
 const app = express()
-// const verifyToken = require('./middleware/verifyToken')
 const AuthRoute = require('./routes/auth')
 const CategoryRoute = require('./routes/category')
 const ToDoRoute = require('./routes/todo')

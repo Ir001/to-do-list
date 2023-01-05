@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import axios from "axios";
 
 const Login = ()=>{
+    document.title = `ToListApp - Login`
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [msg, setMsg] = useState('')
